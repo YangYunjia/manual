@@ -132,3 +132,30 @@ tar -zxvf log30.tar.gz log2013.log      # 只将 tar 内的部分文件解压出
     ```
 
     压缩正则匹配的文件/文件夹。
+
+# 软件安装和配置
+
+## `CFL3D`
+
+### 编译 `CFL3D`
+
+1.	安装ifortran
+
+    - 下载intel fortran [链接](https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html#fortran)
+
+    - 安装教程 [链接](https://zhuanlan.zhihu.com/p/498386759)
+
+2. `ifort`的路径 `/opt/intel/oneapi/compiler/2023.2.1/linux/bin/intel64` ，要加到 `bsahrc` 里面 
+
+3. 设置`ifort`的路径：`/opt/intel/oneapi# source setvars.sh`
+（之后，mpifort就有东西了）
+
+4. 设置`mpif90`（本质上是个wrapper）的对象是`ifort`：
+
+    ```sh
+    export OMPI_FC=/opt/intel/oneapi/compiler/2023.2.1/linux/bin/intel64/ifort
+    ```
+    查看目前的路径
+    ```sh
+    mpif90 –showme OMRI_FC
+    ```
