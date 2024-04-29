@@ -7,7 +7,7 @@
 
 |节点|name|ip|ib|Comment
 |-|-|-|-|-|
-|存储节点   |storage    |192.168.4.120|10.0.4.120
+|存储节点   |storage    |192.168.4.120|10.0.4.200
 |主节点     |master     |192.168.4.220|10.0.4.220
 |cpu1      |node01      | 192.168.4.221|10.0.4.221
 |cpu2      |node02      | 192.168.4.222|10.0.4.222
@@ -104,6 +104,25 @@
 2. 查看任务
 
     - 可以在运行的任务上，点击任务编号查看返回值
+
+# Trouble Shooting
+
+## 重新开机后文件没有挂载上
+
+> 常见形式：能登录系统，但是不能新建环境（节点没有挂上），或进入个人账户后没有文件（master没有挂上）
+
+解决方法1
+
+1. 进入相应节点
+2. 检查挂载情况：`df -h | grep mnt`。正常应该显示`10.0.4.200:/mnt/inspurfs  xxT  xxT  xxT    xx% /mnt/inspurfs`
+3. 如果没有挂载按以下操作
+    - 3.1. 运行`source /etc/rc.local`挂载
+    - 3.2. 如果返回`mount.nfs: Stale file handle`，则目前挂载情况不对，需要先用`umount /mnt/inspurfs`解挂；然后再运行3.1
+    - 3.3. 如果返回不正常，需要进入`storage`(192.168.4.200)重启nfs服务：`systemctl restart nfs`
+
+解决方法2
+
+在节点运行`aistationservice restart`重启节点服务（会非常长时间）
 
 # Linux 操作技巧
 
