@@ -38,38 +38,64 @@
 
 ### 开发环境
 
-    为了避免开发环境占用卡资源，不能自动释放。请每位使用者保留一个开发环境用于调试，调试好的训练调参请提交任务进行排队。
+**为了避免开发环境占用卡资源，不能自动释放。请每位使用者保留一个开发环境用于调试，调试好的训练调参请提交任务进行排队。**
 
 
-1. 创建环境
+#### 创建环境
 
-    环境就是一个docker；个人文件夹`<username>`被挂载在docker中
-    - 业务管理 -> 开发环境 -> 创建
-    - 选择镜像
+环境就是一个docker；个人文件夹`<username>`被挂载在docker中
+- 业务管理 -> 开发环境 -> 创建
+- 选择镜像
 
-        |镜像组|镜像|Comment|兼容性|Size|
-        |-|-|-|-|-|
-        |`pytorch`|`py3.9-openmpi-yangyunjia:v2.0`|配置好了`pytorch` `openmpi` | `cfl3d_mpi (v6.8)` `flowGen` `cgrid`|15.6G|
-        |`pytorch`|`pytorch-yangyunjia-yangyunjia:v1.0`|配置好了`pytorch`||4.8G
+    |镜像组|镜像|Comment|兼容性|Size|
+    |-|-|-|-|-|
+    |`pytorch`|`py3.9-openmpi-yangyunjia:v2.1`|增加了对`ssh`的支持 | |15.6G|
+    |`pytorch`|`py3.9-openmpi-yangyunjia:v2.0`|多配置好了`openmpi` | |15.6G|
+    |`pytorch`|`pytorch-yangyunjia-yangyunjia:v1.0`|配置好了`pytorch`|`cfl3d_mpi (v6.8)` `flowGen` `cgrid`|4.8G
 
-    - 选择所需要的计算资源
-    - 等待拉取结束
+- 如果需要访问共享文件中的数据，则需要在 数据 -> 选择数据 选择需要的文件夹
 
-2. 在环境内使用
+        如果是训练要用，则使用**节点缓存**将数据复制到节点，如果数据过大，不推荐采用节点缓存。
 
-    就是一个普通的`linux`系统
-    
-    - 开启了`jupyter`服务，可以在`jupyter`内修改文件、复制粘贴
-    - 在命令行中运行
+- 选择所需要的计算资源（目前所有用户都没有限制）
+- 等待拉取结束
 
-3. 文件传送
+#### 在环境内使用
 
-    - 小文件可以通过`jupyter`或自带文件管理上传下载
-    - 大文件需要通过ssh复制
+就是一个普通的`linux`系统
 
-        文件在根系统中的存储路径为`mnt/inpurfs/<username>`，通过`scp`命令/ftp工具（）从本地发送
+- 开启了`jupyter`服务，可以在`jupyter`内修改文件、复制粘贴
+- 在命令行中运行
 
-4. **长期不用开发环境请释放（在列表中删除）**
+#### 通过`ssh`访问环境
+
+`v2.1`之后的容器版本安装了openssh服务，可以通过端口映射从外界访问容器。访问方式为：在 容器实例中找到端口`22`的映射，通过`ssh -P <Port Number> root@192.168.4.220`即可访问。
+
+- 密码为`操作`下面`SSH`点出来后的`SSH密码`。如果觉得过于复杂，则可以修改密码：`passwd root`，然后设置新的密码。
+
+#### 文件传送
+
+小文件可以通过`jupyter`或自带文件管理上传下载
+
+大文件需要通过ssh复制
+
+- 通过`scp`命令
+    ```bash
+    # download
+    scp -r -P <Port Number> <Path on Remote> <Path on Local>
+    # upload
+    scp -r -P <Port Number> <Path on Local> <Path on Remote>
+    ```
+    - `-r`表示复制文件夹下的所有文件
+    - `-P`指定自己环境的端口号
+    - `<Path on Remote>`是服务器上自己容器中的路径（不是服务器的路径），不要直接访问服务器的root。例如：`root@192.168.4.220:/yangyunjia/wing2/wingdata.tar`
+    - `<Path on Local>`是本地路径。例如：`/Volumes/My\ Passport/wings` 
+
+- ftp工具（如xftp8）上传下载
+    - 请通过自己的端口链接，不要直接访问服务器
+
+
+#### **长期不用开发环境请释放（在列表中删除）**
 
 ### 提交任务
 
@@ -151,6 +177,8 @@ tar -zxvf log30.tar.gz log2013.log      # 只将 tar 内的部分文件解压出
     ```
 
     压缩正则匹配的文件/文件夹。
+
+- 将`.tar`文件压缩为`.tar.gz`，只需要用`gzip XX.tar`
 
 # 软件安装和配置
 
