@@ -117,6 +117,7 @@
 2. 检查挂载情况：`df -h | grep mnt`。正常应该显示`10.0.4.200:/mnt/inspurfs  xxT  xxT  xxT    xx% /mnt/inspurfs`
 3. 如果没有挂载按以下操作
     - 3.1. 运行`source /etc/rc.local`挂载
+        这一步等价于运行`mount`命令（`mount 10.0.4.200:/mnt/inspurfs  /mnt/inspurfs`）
     - 3.2. 如果返回`mount.nfs: Stale file handle`，则目前挂载情况不对，需要先用`umount /mnt/inspurfs`解挂；然后再运行3.1
     - 3.3. 如果返回不正常，需要进入`storage`(192.168.4.200)重启nfs服务：`systemctl restart nfs`
 
