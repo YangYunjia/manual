@@ -95,10 +95,12 @@
     - `<Path on Remote>`是服务器上自己容器中的路径（不是服务器的路径），不要直接访问服务器的root。例如：`root@192.168.4.220:/yangyunjia/wing2/wingdata.tar`
     - `<Path on Local>`是本地路径。例如：`/Volumes/My\ Passport/wings` 
 
-- ftp工具（如xftp8）上传下载
+- ftp工具上传下载
     - 请通过自己的端口链接，不要直接访问服务器
-    - 根目录在`/mnt/inspurfs/user-fs/
+    - 如果通过直接访问夫妻，根目录在`/mnt/inspurfs/user-fs/`
 
+- 推荐的windows下shell工具
+    - `MobaXterm`：免费工具，支持shell，ssh，ftp等
 
 #### **长期不用开发环境请释放（在列表中删除）**
 
