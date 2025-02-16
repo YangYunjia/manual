@@ -51,11 +51,11 @@
 - 业务管理 -> 开发环境 -> 创建
 - 选择镜像
 
-    |镜像组|镜像|Comment|兼容性|Size|
-    |-|-|-|-|-|
-    |`pytorch`|`py3.9-openmpi-yangyunjia:v2.1`|增加了对`ssh`的支持 | |15.6G|
-    |`pytorch`|`py3.9-openmpi-yangyunjia:v2.0`|多配置好了`openmpi` | |15.6G|
-    |`pytorch`|`pytorch-yangyunjia-yangyunjia:v1.0`|配置好了`pytorch`|`cfl3d_mpi (v6.8)` `flowGen` `cgrid`|4.8G
+    |镜像组|镜像|python|jupyter|ssh|兼容性|Size|
+    |-|-|-|-|-|-|-|
+    |`other`|`mdolab-yangyunjia:v1.1`| 3.9.13 | x | x | `mdolab`全家桶  | 2.2G |
+    |`pytorch`|`py3.9-openmpi-yangyunjia:v2.1`| 3.9.13 |  | | `anaconda` `openmpi`  同下 |15.6G |
+    |`pytorch`|`pytorch-yangyunjia-yangyunjia:v1.0`| 3.6.9 | | |`torch` `cfl3d_mpi (v6.8)` `flowGen` `cgrid`| 4.8G |
 
 - 如果需要访问共享文件中的数据，则需要在 数据 -> 选择数据 选择需要的文件夹
 
