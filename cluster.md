@@ -138,6 +138,37 @@
 
     - 可以在运行的任务上，点击任务编号查看返回值
 
+# 镜像更新
+
+## 下载镜像
+
+## 本地安装镜像
+
+## 上传镜像
+
+## 本地镜像删除
+
+删除镜像后虚拟机存储不会自动回收，需要手动回收。
+
+1. 关闭Docker（右下角图标关闭）
+   - 可以用`wsl --list -v`查看状态，都为`Stopped`就可以
+2. 在powershell中运行
+   ```shell
+    # 关闭 WSL2
+    wsl --shutdown
+    # 运行管理计算机的驱动器的 DiskPart 命令
+    diskpart
+   ```
+3. 会新打开一个叫 DiskPart 的命令窗口，在新打开的 DiskPart 命令窗口中执行：
+   ```cmd
+    # 选择虚拟磁盘文件
+    select vdisk file="虚拟盘路径`C:\Users\<username>\AppData\Local\Docker\wsl\data\ext4.vhdx`"
+    # 压缩文件
+    compact vdisk
+    # 压缩完毕后卸载磁盘
+    detach vdisk
+   ```
+
 # Trouble Shooting
 
 ## 重新开机后文件没有挂载上
